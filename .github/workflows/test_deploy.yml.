@@ -2,9 +2,9 @@ name: CI Test & Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   test:
@@ -21,12 +21,15 @@ jobs:
           java-version: 11
 
       - name: Grant execute permission for gradlew
+        working-directory: MobileApp_Project
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        working-directory: MobileApp_Project
         run: ./gradlew build
 
       - name: Run Unit Tests
+        working-directory: MobileApp_Project
         run: ./gradlew test
 
 
@@ -45,9 +48,11 @@ jobs:
           java-version: 11
 
       - name: Grant execute permission for gradlew
+        working-directory: MobileApp_Project
         run: chmod +x gradlew
 
       - name: Deploy to Firebase App Distribution
+        working-directory: MobileApp_Project
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: ./gradlew appDistributionUploadRelease
