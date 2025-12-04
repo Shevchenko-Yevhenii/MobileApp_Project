@@ -8,11 +8,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
     - name: set up JDK 11
       uses: actions/setup-java@v4
       with:
@@ -21,12 +21,19 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
+      working-directory: MobileApp_Project/MobileApp_Project
       run: chmod +x gradlew
+
     - name: Build with Gradle
+      working-directory: MobileApp_Project/MobileApp_Project
       run: ./gradlew build
+
     - name: Run Tests
+      working-directory: MobileApp_Project/MobileApp_Project
       run: ./gradlew test
+
     - name: Deploy to Firebase App Distribution
+      working-directory: MobileApp_Project/MobileApp_Project
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       run: ./gradlew appDistributionUpload
